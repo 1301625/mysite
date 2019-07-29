@@ -1,0 +1,36 @@
+{% include "django/forms/widgets/textarea.html" %}
+
+<div id="editor_{{ widget.attrs.id }}" style="width: 100%;"></div>
+
+<script>
+    $(function () {
+        var $el = $('#{{ widget.attrs.id }}');
+        console.log($el);
+        var editor = $('#editor_{{ widget.attrs.id }}').tuiEditor({
+            initialEditType: 'markdown',
+            previewStyle: 'vertical',
+            initialValue: $el.val(),
+            height: '700px',
+            exts: [
+                {
+                    name: 'chart',
+                    minWidth: 100,
+                    maxWidth: 600,
+                    minHeight: 100,
+                    maxHeight: 300
+                },
+                'scrollSync',
+                'colorSyntax',
+                'uml',
+                'mark',
+                'table'
+            ],
+            events: {
+                change: function () {
+                    var markdown = editor.data('tuiEditor').getMarkdown();
+                    $el.val(markdown);
+                }
+            }
+        });
+    });
+</script>

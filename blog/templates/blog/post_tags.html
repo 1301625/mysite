@@ -1,0 +1,15 @@
+{% extends 'blog/layout.html' %}
+
+{% block content %}
+    {% for post in posts %}
+        <h1><a href="{% url 'post_detail'  post.pk %}" class="text-green">{{ post.title }}</a></h1>
+        <div class="blog-post-meta">
+                                <div class="post-author">
+                                    <small>{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성</small>
+                                </div>
+
+                            </div>
+                            <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
+    {% endfor %}
+
+{% endblock %}

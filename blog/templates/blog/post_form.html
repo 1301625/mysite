@@ -1,0 +1,54 @@
+{% extends 'blog/layout.html' %}
+{% block content %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+        <h1><a href="{% url 'post_list' %}">새 글 쓰기</a></h1>
+
+      {{ form.media }}
+
+      <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+
+        {% for field in form.hidden_fields %}
+        {{ field }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          <div class="col-sm-12">
+            {{ field }}
+            <p class="help-block">{{ field.help_text }}</p>
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+              {{ error }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="sqave btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+$(function() {
+  $('.form-group label').addClass('col-sm-2');
+  $('.form-group input, .form-group textarea').addClass('form-control');
+});
+/* 자바스크립트로 user_agent 필드값 채워넣기 */
+var dom = document.getElementById('{{ form.user_agent.id_for_label }}');
+dom.value = navigator.userAgent;
+</script>
+{% endblock %}
