@@ -1,98 +1,101 @@
+
 {% extends 'blog/layout.html' %}
 
-{% load static %}
+
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'blog/post_list.css' %}"/>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/post_list.css' %}"/>
+
 
     <div class="container">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 blog-main">
-                    <!----
-                        <div class="alert alert-dismissible alert-primary">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <h3>Please!</h3>
-                            <ul>
-                                <li>방명록 매너를 지켜주세요! Please keep your manners.</li>
-                                <li>오른쪽 상단의 'Signup'에서 회원가입 후, 방명록에 글을 쓸 수 있습니다.</li>
-                                <li>After registering in 'Signup' on the top right corner, you can write in guestbook.</li>
-                            </ul>
-                        </div>
-                        --->
-                    {% if request.user.is_staff %}
-                        <a href="{% url "post_new" %}" class="btn btn-outline-primary float-right">새 글 쓰기</a>
-                    {% endif %}
-                    <p>
-
-                    </p>
-                    {% for post in posts %}
-                        <div class="blog-post">
-                            <div class="blog-post-title">
-                                <h1><a href="{% url "post_detail" post.pk %}" class="text-dark"><b>{{ post.title }}</b></a>
-                                </h1>
-                            </div>
-                            <div class="blog-post-meta">
-                                <div class="post-author">
-                                    <small style="color:gray">{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성</small>
-                                </div>
-
-                            </div>
-                            <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
-
-                            <i class="fa fa-tags" title="tags">
-                                {% if post.tags %}
-                                    <a class="badge badge-pill badge-secondary"
-                                       href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
-                                {% else %}
-                                    <a href=""></a>
-                                {% endif %}
-
-                            </i>
-                            <hr/>
-                        </div>
-                    {% endfor %}
-
-
-                    <div class="aside">
-                        <a role="button" href="" class="float-left btn btn-outline-primary rounded-pill "
-                                data-toggle="modal"
-                                data-target="#searchModal" onclick="return false;">
-                                    <i class="fa fa-search"></i>
-                                    <span>Search</span>
-                                </a>
-                        <ul class="pagination justify-content-center">
-                            {% if posts.has_previous %}
-                                <li class="page-item">
-                                    <a href="?page={{ posts.previous_page_number }}&q={{ request.GET.q }}"
-                                       class="btn page-link rounded-pill">Previous</a>
-                                </li>
-
-                            {% else %}
-                                <li class="page-item">
-                                    <a href="" class="btn page-link rounded-pill text-muted disabled"
-                                       aria-disabled="true">Previous</a>
-                                </li>
-                            {% endif %}
-                            <li class="mx-2"></li>
-                            {% if posts.has_next %}
-                                <li class="page-item">
-                                    <a href="?page={{ posts.next_page_number }}&q={{ request.GET.q }}"
-                                       class="btn page-link rounded-pill">Next</a>
-                                </li>
-                            {% else %}
-                                <li class="page-item">
-                                    <a href="" class="btn page-link rounded-pill text-muted disabled"
-                                       aria-disabled="true">Next</a>
-                                </li>
-                            {% endif %}
+        <div class="row">
+            <div class="col-sm-12">
+                <!----
+                    <div class="alert alert-dismissible alert-primary">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h3>Please!</h3>
+                        <ul>
+                            <li>방명록 매너를 지켜주세요! Please keep your manners.</li>
+                            <li>오른쪽 상단의 'Signup'에서 회원가입 후, 방명록에 글을 쓸 수 있습니다.</li>
+                            <li>After registering in 'Signup' on the top right corner, you can write in guestbook.</li>
                         </ul>
                     </div>
+                    --->
+                {% if request.user.is_staff %}
+                    <a href="{% url "post_new" %}" class="btn btn-outline-primary float-right">새 글 쓰기</a>
+                {% endif %}
+                <p>
+
+                </p>
+                {% for post in posts %}
+                    <div class="blog-post">
+                        <div class="blog-post-title">
+                            <h2><a href="{{ post.get_absolute_url }}" class="text-dark"><b>{{ post.title }}</b></a>
+                            </h2>
+                        </div>
+                        <div class="blog-post-meta">
+                            <div class="post-author">
+                                <small style="color:gray">{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성
+                                </small>
+                            </div>
+
+                        </div>
+                        <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
+
+                        <i class="fa fa-tags" title="tags">
+                            {% if post.tags %}
+                                <a class="badge badge-pill badge-secondary"
+                                   href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
+                            {% else %}
+                                <a href=""></a>
+                            {% endif %}
+
+                        </i>
+                        <hr/>
+                    </div>
+                {% endfor %}
+
+
+                <div class="clearfix">
+                    <a role="button" href="" class="float-left btn btn-outline-primary rounded-pill "
+                       data-toggle="modal"
+                       data-target="#searchModal" onclick="return false;">
+                        <i class="fa fa-search"></i>
+                        <span>Search</span>
+                    </a>
+                    <ul class="pagination justify-content-center">
+                        {% if posts.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ posts.previous_page_number }}&q={{ request.GET.q }}"
+                                   class="btn page-link rounded-pill">Previous</a>
+                            </li>
+
+                        {% else %}
+                            <li class="page-item">
+                                <a href="" class="btn page-link rounded-pill text-muted disabled"
+                                   aria-disabled="true">Previous</a>
+                            </li>
+                        {% endif %}
+                        <li class="mx-2"></li>
+                        {% if posts.has_next %}
+                            <li class="page-item">
+                                <a href="?page={{ posts.next_page_number }}&q={{ request.GET.q }}"
+                                   class="btn page-link rounded-pill">Next</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a href="" class="btn page-link rounded-pill text-muted disabled"
+                                   aria-disabled="true">Next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -117,3 +120,4 @@
         </div>
     </div>
 {% endblock %}
+

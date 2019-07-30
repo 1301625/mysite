@@ -17,10 +17,18 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+
+from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
     path('accounts/', include('account.urls'))
 
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+'''
+ insecure=True static 파일 불러오기 
+ static 404 에러 문제
+'''
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT ,insecure=True)
+

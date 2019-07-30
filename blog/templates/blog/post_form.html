@@ -6,13 +6,13 @@
   <div class="row">
     <div class="col-md-12">
 
-        <h1><a href="{% url 'post_list' %}">새 글 쓰기</a></h1>
+        <h3>새 글 쓰기</h3>
 
-      {{ form.media }}
 
-      <form action="" method="post" class="form-horizontal">
+
+      <form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
         {% csrf_token %}
-
+        {{ form.media }}
         {% for error in form.non_field_errors %}
         <div class="alert alert-danger">
           {{ error }}
@@ -38,7 +38,9 @@
         </div>
         {% endfor %}
         <button type="submit" class="sqave btn btn-primary">Save</button>
+          <a href="javascript:history.back()" class="btn btn-primary">Back</a>
       </form>
+
     </div>
   </div>
 </div>

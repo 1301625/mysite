@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+<div class="body-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template" style="text-align: center; margin-top: 400px;">
+
+                <h1>웁스!</h1>
+                <h2>페이지를 찾을수 없습니다</h2>
+                <div class="error-details">
+                    죄송합니다. 오류가 발생했습니다. 요청한 페이지를 찾을 수 없습니다.
+                </div>
+                <div class="error-actions">
+                    <a href="{% url "post_list" %}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>목록으로 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

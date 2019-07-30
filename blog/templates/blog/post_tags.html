@@ -1,15 +1,37 @@
 {% extends 'blog/layout.html' %}
 
 {% block content %}
-    {% for post in posts %}
-        <h1><a href="{% url 'post_detail'  post.pk %}" class="text-green">{{ post.title }}</a></h1>
-        <div class="blog-post-meta">
-                                <div class="post-author">
-                                    <small>{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성</small>
-                                </div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                {% for post in posts %}
+                    <div class="blog-post">
+                        <div class="blog-post-title">
+                            <h2><a href="{{ post.get_absolute_url }}" class="text-dark"><b>{{ post.title }}</b></a>
+                            </h2>
+                        </div>
+                        <div class="blog-post-meta">
+                            <div class="post-author">
+                                <small style="color:gray">{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성
+                                </small>
                             </div>
-                            <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
-    {% endfor %}
 
+                        </div>
+                        <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
+
+                        <i class="fa fa-tags" title="tags">
+                            {% if post.tags %}
+                                <a class="badge badge-pill badge-secondary"
+                                   href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
+                            {% else %}
+                                <a href=""></a>
+                            {% endif %}
+
+                        </i>
+                        <hr/>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

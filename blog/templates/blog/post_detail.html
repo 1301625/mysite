@@ -1,5 +1,5 @@
 {% extends "blog/layout.html" %}
-{% load markdown_extras %}
+
 {% load static %}
 
 {% block content %}
@@ -14,19 +14,16 @@
       <div class="post">
         {% if post.published_date %}
         <div class="date">
-          {{ post.published_date }}
+
+          <h6 class="text-muted">{{ post.published_date |date:"Y/m/d" }}</h6>
+            <br>
         </div>
         {% else %}
         <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">
           Publish
         </a>
         {% endif %}
-        {% if user.is_authenticated %}
-        <a  href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        <a
-        onclick="return confirm('Are you sure?')"
-        href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-        {% endif %}
+
 
       </div>
       <h2>{{ post.title }}</h2>
@@ -51,6 +48,7 @@
         <a href="{% url "post_list" %}" class="btn btn-primary">목록으로</a>
         {% if request.user.is_staff %}
         <a href="{% url "post_edit" post.pk %}" class="btn btn-secondary">수정하기</a>
+            <a href="{% url 'post_remove' post.pk %}" class="btn btn-danger">삭제하기</a>
         {% endif %}
         <br>
       </div>
