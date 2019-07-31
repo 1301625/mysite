@@ -38,7 +38,7 @@
         </div>
         {% endfor %}
         <button type="submit" class="sqave btn btn-primary">Save</button>
-          <a href="javascript:history.back()" class="btn btn-primary">Back</a>
+          <a href="{% url 'post_list' %}" class="btn btn-primary" onclick="return delchk()">Back</a>
       </form>
 
     </div>
@@ -52,5 +52,9 @@ $(function() {
 /* 자바스크립트로 user_agent 필드값 채워넣기 */
 var dom = document.getElementById('{{ form.user_agent.id_for_label }}');
 dom.value = navigator.userAgent;
+/* back 클릭시 알람 생성*/
+function delchk(){
+       return confirm("글 작성을 취소합니?");
+}
 </script>
 {% endblock %}

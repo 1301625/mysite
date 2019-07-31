@@ -45,7 +45,7 @@
         </div>
 
         <br>
-        <a href="{% url "post_list" %}" class="btn btn-primary">목록으로</a>
+        <a href="{% url 'post_list' %}" class="btn btn-primary">목록으로</a>
         {% if request.user.is_staff %}
             <a href="{% url "post_edit" post.pk %}" class="btn btn-secondary">수정하기</a>
             <a href="{% url 'post_remove' post.pk %}" class="btn btn-danger">삭제하기</a>

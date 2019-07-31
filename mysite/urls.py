@@ -26,6 +26,15 @@ urlpatterns = [
     path('accounts/', include('account.urls'))
 
 ]
+
+#debug-toolbar 설정
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]
+
+
 '''
  insecure=True static 파일 불러오기 
  static 404 에러 문제

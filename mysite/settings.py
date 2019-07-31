@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'aj@)kw2-h_lftvrtvzhfr=x3kb_#eq8o7k*13o(%k#g&pg1g9f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'disqus',
     'django.contrib.sites',
     'account',
+
+    'debug_toolbar', ##debug-toolbar 설정
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', ##debug-toolbar 설정
 ]
+
+INTERNAL_IPS = ('127.0.0.1',) ##debug-toolbar 설정
 
 ROOT_URLCONF = 'mysite.urls'
 
