@@ -11,7 +11,8 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+         <div class="col-md-2"></div>
+            <div class="col-md-8">
                 <!----
                     <div class="alert alert-dismissible alert-primary">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -23,12 +24,7 @@
                         </ul>
                     </div>
                     --->
-                {% if request.user.is_staff %}
-                    <a href="{% url "post_new" %}" class="btn btn-outline-primary float-right">새 글 쓰기</a>
-                {% endif %}
-                <p>
 
-                </p>
                 {% for post in posts %}
                     <div class="blog-post">
                         <div class="blog-post-title">
@@ -37,14 +33,14 @@
                         </div>
                         <div class="blog-post-meta">
                             <div class="post-author">
-                                <small style="color:gray">{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성
+                                <small style="color:gray">{{ post.created_date|date:"d M Y" }} {{ user.username }} 작성
                                 </small>
                             </div>
 
                         </div>
-                        <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
+                        <div class="post-summary">>{{ post.text|truncatewords_html:10 }}</div>
 
-                        <i class="fa fa-tags" title="tags">
+                        <i class="fa fa-tag" title="tags">
                             {% if post.tags %}
                                 <a class="badge badge-pill badge-secondary"
                                    href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
@@ -59,6 +55,11 @@
 
 
                 <div class="clearfix">
+                <ul class="justify-content:flex-start">
+                     {% if request.user.is_staff %}
+                    <a href="{% url "post_new" %}" class="btn btn-outline-primary float-right rounded-pill">새 글 쓰기</a>
+                {% endif %}
+                </ul>
                     <a role="button" href="" class="float-left btn btn-outline-primary rounded-pill "
                        data-toggle="modal"
                        data-target="#searchModal" onclick="return false;">
@@ -90,6 +91,7 @@
                                    aria-disabled="true">Next</a>
                             </li>
                         {% endif %}
+
                     </ul>
                 </div>
             </div>
@@ -104,7 +106,7 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        <i class="fa fa-search"> </i><span> Search</span>
+                        <i class="fa fa-search"></i><span> Search</span>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

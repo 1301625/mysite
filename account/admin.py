@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Account
 # Register your models here.
 from account import forms
+
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
 

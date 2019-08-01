@@ -1,23 +1,36 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<form method="POST" action="{% url 'login' %}" class="sign-in-form">
-  {% csrf_token %}
-  <h2 class="sub-title"> Login </h2>
-  <!-- <input type="hidden" name="next" value="">
-  {{form.as_p}} >> 기본으로 내장된 로그인 폼을 아래와 같이 커스터마이징 한다-->
-  <div class="form-group">
-    <label for="{{ form.email.id_for_label }}">Email</label>
-    <input class="form-control" id="{{ form.email.id_for_label }}"  name="{{ form.email.html_name }}" type="text" />
-  </div>
-  <div class="form-group">
-    <label for="{{ form.password.id_for_label }}">Password</label>
-    <input class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" type="password" />
-  </div>
-  <input type="submit" class="save btn btn-success" value="로그인">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
 
 
-    <button type="button" class="btn btn-danger">취소</button>
-  <input type="hidden" name="next" value="">
-</form>
+            <form method="POST" action="{% url 'login' %}" class="sign-in-form">
+                {% csrf_token %}
+                <h2 class="sub-title"> 로그인</h2>
+                {% if form.errors %}
+                    <p>이메일 혹은 비밀번호가 다릅니다. 다시 확인하세요</p>
+                {% endif %}
+
+
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    <input class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}"
+                           type="text" placeholder="이메일을 입력하세요"/>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <input class="form-control" id="{{ form.password.id_for_label }}"
+                           name="{{ form.password.html_name }}" type="password" placeholder="비밀번호 입력하세요"/>
+                </div>
+                <input type="submit" class="save btn btn-success" value="로그인">
+
+                <a href="{% url 'post_list' %}">
+                    <button type="button" class="btn btn-danger">취소</button>
+                </a>
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
+    </div>
 {% endblock %}

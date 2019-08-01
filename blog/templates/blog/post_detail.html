@@ -4,56 +4,64 @@
 
 {% block content %}
     <style>
-        .tui-editor-contents{
-            font-size: 16px;
+        .tui-editor-contents {
+            font-size: 1rem;
         }
     </style>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="post">
-        {% if post.published_date %}
-        <div class="date">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="post">
+                    {% if post.published_date %}
+                        <div class="date">
 
-          <h6 class="text-muted">{{ post.published_date |date:"Y/m/d" }}</h6>
-            <br>
+                            <h6 class="text-muted">{{ post.published_date |date:"d M Y" }} |
+                                <i class="fa fa-tag" title="tags">
+                                    {% if post.tags %}
+                                        <a class="badge badge-pill badge-secondary"
+                                           href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
+                                    {% else %}
+                                        <a href=""></a>
+                                    {% endif %}
+
+                                </i></h6>
+                            <br>
+                        </div>
+                    {% else %}
+                        <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">
+                            Publish
+                        </a>
+                    {% endif %}
+
+
+                </div>
+                <h1>{{ post.title }}</h1>
+                <br/>
+                <div class="content-markdown" id="editSection">
+                    <div class="content" style="font-size:20px;">{{ post.text }}</div>
+                </div>
+
+                {% if post.photo %}
+                    <img src="{{ post.photo.url }}" style="max-width: 50%;"/>
+                {% endif %}
+
+
+                <div id="disqus_thread" style="margin-top: 7rem;">
+                    {% load disqus_tags %}
+                    {% disqus_show_comments %}
+                </div>
+
+                <br>
+                <a href="{% url 'post_list' %}" class="btn btn-primary">목록으로</a>
+                {% if request.user.is_staff %}
+                    <a href="{% url "post_edit" post.pk %}" class="btn btn-secondary">수정하기</a>
+                    <a href="{% url 'post_remove' post.pk %}" class="btn btn-danger">삭제하기</a>
+                {% endif %}
+                <br>
+            </div>
         </div>
-        {% else %}
-        <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">
-          Publish
-        </a>
-        {% endif %}
-
-
-      </div>
-      <h2>{{ post.title }}</h2>
-      <hr/>
-      <div class="content-markdown" id="editSection">
-          <div class="content" style="font-size:20px;">{{ post.text }}</div>
-      </div>
-
-      {% if post.photo %}
-        <img src = "{{ post.photo.url }}" style="max-width: 50%;" />
-      {% endif %}
-
-
-      <hr/>
-      <h3>Comments</h3>
-        <div id="disqus_thread">
-            {% load disqus_tags %}
-            {% disqus_show_comments %}
-        </div>
-
-        <br>
-        <a href="{% url 'post_list' %}" class="btn btn-primary">목록으로</a>
-        {% if request.user.is_staff %}
-            <a href="{% url "post_edit" post.pk %}" class="btn btn-secondary">수정하기</a>
-            <a href="{% url 'post_remove' post.pk %}" class="btn btn-danger">삭제하기</a>
-        {% endif %}
-        <br>
-      </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block extra_body %}
