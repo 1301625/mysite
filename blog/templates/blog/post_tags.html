@@ -3,7 +3,8 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+             <div class="col-md-2"></div>
+            <div class="col-md-8">
                 {% for post in posts %}
                     <div class="blog-post">
                         <div class="blog-post-title">
@@ -17,7 +18,7 @@
                             </div>
 
                         </div>
-                        <div class="post-summary">>{{ post.text|truncatewords_html:30 }}</div>
+                        <div class="post-summary">>{{ post.text|truncatewords_html:10 }}</div>
 
                         <i class="fa fa-tags" title="tags">
                             {% if post.tags %}
