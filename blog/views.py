@@ -15,7 +15,7 @@ def post_list(request):
     if q:
         posts = posts.filter(title__icontains=q)
 
-
+    #posts_django = Post.objects.filter(tags__contains='HTTP')
     paginator = Paginator(posts, 5)
     page = request.GET.get('page')
 
@@ -34,7 +34,8 @@ def post_list(request):
 
     return render(request, 'blog/post_list.html', {
         'posts': posts
-        , 'q': q
+        , 'q': q,
+     #   'posts_django' : posts_django,
     })
 
 def post_tags(request ,tags):
