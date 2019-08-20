@@ -1,4 +1,3 @@
-
 {% extends 'blog/layout.html' %}
 
 
@@ -11,7 +10,7 @@
 
     <div class="container">
         <div class="row">
-         <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
             <div class="col-md-8">
                 <!----
                     <div class="alert alert-dismissible alert-primary">
@@ -32,14 +31,16 @@
                             </h2>
                         </div>
                         <div class="blog-post-meta">
-                            <div class="post-author">
-                                <small style="color:gray">{{ post.created_date|date:"d M Y" }} {{ user.username }} 작성
-                                </small>
+                            <div class="post-author" style="color: gray;">
+                                <img src="{{ user.thumbnail.url }}" alt=""
+                                     style="float: right; width: 70px; border-radius: 50%">{{ post.created_date|date:"Y년 M d일" }}
+                                | {{ user.username }}
                             </div>
 
                         </div>
-                        <div class="post-summary">>{{ post.text|truncatewords_html:9 }}</div>
-
+                        <br>
+                        <div class="post-summary" style="font-size:1rem">{{ post.text|truncatewords_html:2 }}</div>
+                        <br>
                         <i class="fa fa-tag" title="tags">
                             {% if post.tags %}
                                 <a class="badge badge-pill badge-secondary"
@@ -49,17 +50,19 @@
                             {% endif %}
 
                         </i>
-                        <hr/>
+
                     </div>
+                    <hr/>
                 {% endfor %}
 
 
                 <div class="clearfix">
-                <ul class="justify-content:flex-start">
-                     {% if request.user.is_staff %}
-                    <a href="{% url "post_new" %}" class="btn btn-outline-primary float-right rounded-pill">새 글 쓰기</a>
-                {% endif %}
-                </ul>
+                    <ul class="justify-content:flex-start">
+                        {% if request.user.is_staff %}
+                            <a href="{% url "post_new" %}" class="btn btn-outline-primary float-right rounded-pill">새 글
+                                쓰기</a>
+                        {% endif %}
+                    </ul>
                     <a role="button" href="" class="float-left btn btn-outline-primary rounded-pill "
                        data-toggle="modal"
                        data-target="#searchModal" onclick="return false;">

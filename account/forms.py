@@ -32,7 +32,7 @@ class AccountCreateForm(forms.ModelForm):
             Account._default_manager.get(username=username)
         except Account.DoesNotExist:
             return username
-        raise forms.ValidationError("A user with that username already exists")
+        raise forms.ValidationError(" A user with that username already exists")
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -60,7 +60,7 @@ class AccountChangeForm(forms.ModelForm):
                              error_messages={
                                  'invalid': "This form is not a email address"})
 
-    username = forms.RegexField(label='Username', max_length=30,
+    username = forms.RegexField(label="Username", max_length=30,
                                 regex=r'^[\w.@+-]+$',
                                 help_text="Required. 30 characters or fewer. Letters, digits and "
                                           "./+/-/_ only.",
@@ -76,7 +76,7 @@ class AccountChangeForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = '__all__'
+        fields = ('email', 'username','password' , 'thumbnail')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.

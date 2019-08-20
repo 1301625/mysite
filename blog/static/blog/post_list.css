@@ -2,3 +2,11 @@
     width: 300px;
     height: auto;
 }
+
+.post-summary h1{
+    font-size: large;
+}
+.blog-post {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}

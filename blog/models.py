@@ -5,8 +5,10 @@ from imagekit.processors import Thumbnail
 from django.utils import timezone
 from django.urls import reverse
 # Create your models here.
+from account.models import Account
 
 class Post(models.Model):
+    author = models.ForeignKey(Account , on_delete=models.CASCADE)
     title = models.CharField(max_length=100, verbose_name = 'Title' , help_text = 'Please enter a posting title')
     text = models.TextField(verbose_name='Contents')
     photo = ProcessedImageField(blank=True, upload_to = 'blog/post/%Y' ,processors = [Thumbnail(300,300)],format='JPEG' ,options={'quality': 60})

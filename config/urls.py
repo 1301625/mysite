@@ -39,5 +39,5 @@ if settings.DEBUG:
  insecure=True static 파일 불러오기 
  static 404 에러 문제
 '''
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT ,insecure=True)
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

@@ -4,7 +4,10 @@ from django.core import validators
 
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.conf import settings
 
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 # Create your models here.
 class AccountManager(BaseUserManager):
@@ -59,6 +62,11 @@ class Account(AbstractBaseUser, PermissionsMixin):
                                               'active. Unselect this instead of deleting accounts.')
 
     date_joined = models.DateTimeField(('date joined'), default=timezone.now)
+
+    #썸네일
+    thumbnail = ProcessedImageField(blank=True, upload_to="profile" , null=True, processors=[ResizeToFill(100,100)],
+                                    format='JPEG', options={'quality': 80})
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -87,6 +95,10 @@ class Account(AbstractBaseUser, PermissionsMixin):
         :return: Account id.
         """
         return self.email
+
+    @property
+    def photo_url(self):
+        return '{}{}'.format(settings.MEDIA_URL, self.thumbnail)
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """
