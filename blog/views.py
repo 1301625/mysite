@@ -59,6 +59,7 @@ def post_new(request):
             post = form.save(commit=False)
             messages.success(request, messages.INFO, "새 글이 등록되었습니다")
             post.published_date = timezone.now()
+            post.author = request.user
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:

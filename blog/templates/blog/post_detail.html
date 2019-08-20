@@ -13,31 +13,32 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="post">
-                    {% if post.published_date %}
-                        <div class="date">
 
-                            <h6 class="text-muted">{{ post.published_date |date:"d M Y" }} |
-                                <i class="fa fa-tag" title="tags">
-                                    {% if post.tags %}
-                                        <a class="badge badge-pill badge-secondary"
-                                           href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
-                                    {% else %}
-                                        <a href=""></a>
-                                    {% endif %}
+                    <div class="date">
+                        <!--<img src="{{ post.author.thumbnail.url }}" alt="" style="float:left; width: 70px; border-radius: 50%">
+                        <br> <h6
+                            class="text-muted"> {{ post.author.username }} {{ post.published_date |date:"Y년 M d일" }} |
+                        <i class="fa fa-tag" title="tags">
+                            {% if post.tags %}
+                                <a class="badge badge-pill badge-secondary"
+                                   href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
+                            {% else %}
+                                <a href=""></a>
+                            {% endif %}
 
-                                </i></h6>
-                            <br>
-                        </div>
-                    {% else %}
-                        <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">
-                            Publish
-                        </a>
-                    {% endif %}
+                        </i></h6>
+                        <br>
+                    </div> -->
 
 
                 </div>
-                <h1>{{ post.title }}</h1>
-                <br/>
+                <div class="post-header" style="padding-bottom: 50px;">
+                    <h1 style="text-align: center; padding-bottom: 30px;">{{ post.title }}</h1>
+                    <div class="post-meta" style="text-align: center">
+                        <h6 class="text-muted">  {{ post.published_date |date:"Y년 M d일" }} | {{ post.author.username }}</h6>
+                        <img src="{{ post.author.thumbnail.url }}" alt="" style=" width: 70px; border-radius: 50%">
+                    </div>
+                </div>
                 <div class="content-markdown" id="editSection">
                     <div class="content" style="font-size:20px;">{{ post.text }}</div>
                 </div>
