@@ -4,10 +4,6 @@
 
 {% block content %}
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/post_list.css' %}"/>
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-2"></div>
@@ -117,7 +113,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="" method="get" class="form-inline">
-                        <input type="text" name="q" value="{{ q }}" placeholder="Search" class="form-control mr-sm-2"/>
+                        <input type="text" name="q" value="{{ q }}" placeholder="제목을 입력해주세요" class="form-control mr-sm-2"/>
                         <input type="submit" value="검색" class="btn btn-secondary"/>
                     </form>
                 </div>

@@ -1,26 +1,29 @@
 {% extends 'blog/layout.html' %}
 
 {% block content %}
+
     <div class="container">
         <div class="row">
              <div class="col-md-2"></div>
             <div class="col-md-8">
-                {% for post in posts %}
+                 {% for post in posts %}
                     <div class="blog-post">
                         <div class="blog-post-title">
                             <h2><a href="{{ post.get_absolute_url }}" class="text-dark"><b>{{ post.title }}</b></a>
                             </h2>
                         </div>
                         <div class="blog-post-meta">
-                            <div class="post-author">
-                                <small style="color:gray">{{ post.published_date|date:"Y-m-d" }} {{ post.author }} 작성
-                                </small>
+                            <div class="post-author" style="color: gray;">
+                                <img src="{{ post.author.thumbnail.url }}" alt=""
+                                     style="float: right; width: 70px; border-radius: 50%">{{ post.created_date|date:"Y년 M d일" }}
+                                | {{ post.author.username }}
                             </div>
 
                         </div>
-                        <div class="post-summary">>{{ post.text|truncatewords_html:10 }}</div>
-
-                        <i class="fa fa-tags" title="tags">
+                        <br>
+                        <div class="post-summary" style="font-size:1rem">{{ post.text|truncatewords_html:2 }}</div>
+                        <br>
+                        <i class="fa fa-tag" title="tags">
                             {% if post.tags %}
                                 <a class="badge badge-pill badge-secondary"
                                    href="{% url "post_tags" post.tags %}">{{ post.tags }}</a>
@@ -29,8 +32,9 @@
                             {% endif %}
 
                         </i>
-                        <hr/>
+
                     </div>
+                    <hr/>
                 {% endfor %}
             </div>
         </div>

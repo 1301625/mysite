@@ -1,2 +1,6 @@
 {% extends 'layout.html' %}
 
+{% block extra_body %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/post_list.css' %}"/>
+{% endblock %}

@@ -9,7 +9,7 @@ from django.core.paginator import Paginator ,EmptyPage ,PageNotAnInteger
 import math
 
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.select_related('author').all()
 
     q = request.GET.get('q', '')
     if q:
@@ -39,7 +39,7 @@ def post_list(request):
     })
 
 def post_tags(request ,tags):
-    posts = Post.objects.filter(tags__contains=tags)
+    posts = Post.objects.select_related('author').filter(tags__contains=tags)
     context = {
         'tags':tags,
         'posts':posts
