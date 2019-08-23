@@ -4,9 +4,10 @@ from .models import Post
 from django.contrib import messages
 from .forms import PostForm
 # Create your views here.
-from django.core.paginator import Paginator ,EmptyPage ,PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import math
+
 
 def post_list(request):
     posts = Post.objects.select_related('author').all()
@@ -15,7 +16,7 @@ def post_list(request):
     if q:
         posts = posts.filter(title__icontains=q)
 
-    #posts_django = Post.objects.filter(tags__contains='HTTP')
+    # posts_django = Post.objects.filter(tags__contains='HTTP')
     paginator = Paginator(posts, 5)
     page = request.GET.get('page')
 
@@ -31,20 +32,20 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-
     return render(request, 'blog/post_list.html', {
         'posts': posts
         , 'q': q,
-     #   'posts_django' : posts_django,
+        #   'posts_django' : posts_django,
     })
 
-def post_tags(request ,tags):
+
+def post_tags(request, tags):
     posts = Post.objects.select_related('author').filter(tags__contains=tags)
     context = {
-        'tags':tags,
-        'posts':posts
+        'tags': tags,
+        'posts': posts
     }
-    return render(request, 'blog/post_tags.html' ,context)
+    return render(request, 'blog/post_tags.html', context)
 
 
 def post_detail(request, pk):
@@ -57,10 +58,10 @@ def post_new(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            messages.success(request, messages.INFO, "새 글이 등록되었습니다")
             post.published_date = timezone.now()
             post.author = request.user
             post.save()
+            messages.success(request, messages.INFO, "새 글이 등록되었습니다")
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
@@ -77,8 +78,14 @@ def post_edit(request, pk):
             post.save()
             messages.success(request, "글이 수정되었습니다")
             return redirect('post_detail', pk=post.pk)
+
     else:
-        form = PostForm(instance=post)
+        if request.user == post.author:
+            form = PostForm(instance=post)
+        else:
+            messages.error(request, "접근할 수 없습니다")
+            return redirect('post_detail', pk=post.pk)
+
     return render(request, 'blog/post_form.html', {'form': form})
 
 
@@ -90,5 +97,10 @@ def post_publish(request, pk):
 
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.delete()
+    if request.user == post.author:
+        post.delete()
+    else:
+        messages.error(request, "접근할 수 없습니다")
+        return redirect('post_detail' , pk=post.pk)
+
     return redirect('post_list')
