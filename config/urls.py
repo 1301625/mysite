@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.views.generic import TemplateView
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    path('accounts/', include('account.urls'))
+    path('accounts/', include('account.urls')),
+    path('about/', TemplateView.as_view(template_name="about.html"), name='about'),
 
 ]
 

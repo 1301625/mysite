@@ -49,7 +49,7 @@ def post_tags(request, tags):
 
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = Post.objects.select_related('author').get(pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
 

@@ -1,7 +1,5 @@
 {% extends "blog/layout.html" %}
 
-{% load static %}
-
 {% block content %}
     <style>
         .tui-editor-contents {
@@ -31,42 +29,38 @@
                     </div> -->
 
 
-                </div>
-                <div class="post-header" style="padding-bottom: 50px;">
-                    <h1 style="text-align: center; padding-bottom: 30px;">{{ post.title }}</h1>
-                    <div class="post-meta" style="text-align: center">
-                        <h6 class="text-muted">  {{ post.published_date |date:"Y년 M d일" }} | {{ post.author.username }}</h6>
-                        <img src="{{ post.author.thumbnail.url }}" alt="" style=" width: 70px; border-radius: 50%">
                     </div>
+                    <div class="post-header" style="padding-bottom: 50px;">
+                        <h1 style="text-align: center; padding-bottom: 30px;">{{ post.title }}</h1>
+                        <div class="post-meta" style="text-align: center">
+                            <h6 class="text-muted">  {{ post.published_date |date:"Y년 M d일" }}
+                                | {{ post.author.username }}</h6>
+                            <img src="{{ post.author.thumbnail.url }}" alt="" style=" width: 70px; border-radius: 50%">
+                        </div>
+                    </div>
+                    <div class="content-markdown" id="editSection">
+                        <div class="content" style="font-size:20px;">{{ post.text }}</div>
+                    </div>
+
+                    {% if post.photo %}
+                        <img src="{{ post.photo.url }}" style="max-width: 50%;"/>
+                    {% endif %}
+
+
+                    <div id="disqus_thread" style="margin-top: 7rem;">
+                        {% load disqus_tags %}
+                        {% disqus_show_comments %}
+                    </div>
+
+                    <br>
+                    <a href="{% url 'post_list' %}" class="btn btn-primary">목록으로</a>
+                    {% if request.user.is_staff %}
+                        <a href="{% url "post_edit" post.pk %}" class="btn btn-secondary">수정하기</a>
+                        <a href="{% url 'post_remove' post.pk %}" class="btn btn-danger">삭제하기</a>
+                    {% endif %}
+                    <br>
                 </div>
-                <div class="content-markdown" id="editSection">
-                    <div class="content" style="font-size:20px;">{{ post.text }}</div>
-                </div>
-
-                {% if post.photo %}
-                    <img src="{{ post.photo.url }}" style="max-width: 50%;"/>
-                {% endif %}
-
-
-                <div id="disqus_thread" style="margin-top: 7rem;">
-                    {% load disqus_tags %}
-                    {% disqus_show_comments %}
-                </div>
-
-                <br>
-                <a href="{% url 'post_list' %}" class="btn btn-primary">목록으로</a>
-                {% if request.user.is_staff %}
-                    <a href="{% url "post_edit" post.pk %}" class="btn btn-secondary">수정하기</a>
-                    <a href="{% url 'post_remove' post.pk %}" class="btn btn-danger">삭제하기</a>
-                {% endif %}
-                <br>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block extra_body %}
-    <script>
-
-    </script>
 {% endblock %}
