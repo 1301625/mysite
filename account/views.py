@@ -18,7 +18,7 @@ def sign_in(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    return redirect('/blog')
+                    return redirect('/')
     else:
         form = LoginForm
 
@@ -31,7 +31,7 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/blog')
+            return redirect('/')
     else :
         form = AccountCreateForm
 
@@ -40,5 +40,5 @@ def sign_up(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect('/blog')
+    return redirect('/')
 
